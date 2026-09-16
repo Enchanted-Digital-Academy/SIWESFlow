@@ -1,29 +1,50 @@
 import SchoolNavigation from "@/components/shared/SchoolNavigation";
+import { mockActivityLogs, mockStudents } from "@/data/mock";
+
+const totalStudents = mockStudents.length;
+
+const placedStudents = mockStudents.filter(
+  (student) => student.placementCompany.trim().length > 0,
+).length;
+
+const unplacedStudents = totalStudents - placedStudents;
+
+const activeStudentIds = new Set(
+  mockActivityLogs.map((activityLog) => activityLog.studentId),
+);
+
+const activeStudents = mockStudents.filter((student) =>
+  activeStudentIds.has(student.id),
+).length;
+
+// The current mock Student type does not contain at-risk or completion fields.
+const atRiskStudents = 0;
+const completedStudents = 0;
 
 const dashboardMetrics = [
   {
     label: "Total Students",
-    value: 0,
+    value: totalStudents,
   },
   {
     label: "Placed Students",
-    value: 0,
+    value: placedStudents,
   },
   {
     label: "Unplaced Students",
-    value: 0,
+    value: unplacedStudents,
   },
   {
     label: "Active Students",
-    value: 0,
+    value: activeStudents,
   },
   {
     label: "At-Risk Students",
-    value: 0,
+    value: atRiskStudents,
   },
   {
     label: "Completed Students",
-    value: 0,
+    value: completedStudents,
   },
 ];
 
@@ -34,6 +55,7 @@ export default function SchoolDashboardPage() {
         <div className="mx-auto max-w-7xl px-6 py-4">
           <div>
             <p className="text-sm font-medium text-slate-500">School</p>
+
             <h1 className="text-2xl font-semibold text-slate-900">
               School Dashboard
             </h1>
@@ -46,9 +68,11 @@ export default function SchoolDashboardPage() {
       <section className="mx-auto max-w-7xl px-6 py-8">
         <div className="mb-8">
           <p className="text-sm font-medium text-slate-500">Overview</p>
+
           <h2 className="mt-1 text-xl font-semibold text-slate-900">
             SIWES Monitoring
           </h2>
+
           <p className="mt-2 max-w-2xl text-sm text-slate-600">
             Monitor student placements, activity, progress, and completion
             across your institution.
