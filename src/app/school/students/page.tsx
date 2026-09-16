@@ -1,5 +1,6 @@
 import SchoolNavigation from "@/components/shared/SchoolNavigation";
 import { mockStudents } from "@/data/mock";
+import Link from "next/link";
 
 export default function SchoolStudentsPage() {
   return (
@@ -48,8 +49,11 @@ export default function SchoolStudentsPage() {
               <tbody className="divide-y">
                 {mockStudents.map((student) => (
                   <tr key={student.id} className="text-slate-700">
-                    <td className="whitespace-nowrap px-6 py-4 font-medium text-slate-900">
-                      {student.name}
+                    <td className="whitespace-nowrap px-6 py-4 font-medium">
+                      <Link href={`/school/students/${student.id}`} 
+                        className="text-slate-900 hover:underline">
+                        {student.name}
+                      </Link>
                     </td>
 
                     <td className="whitespace-nowrap px-6 py-4">
