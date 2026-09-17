@@ -14,10 +14,10 @@ export default function Sidebar() {
   return (
     <aside className="w-64 bg-slate-900 text-slate-300 flex flex-col min-h-screen">
       <div className="h-16 flex items-center px-6 border-b border-slate-800">
-        <span className="text-white text-xl font-bold tracking-wide">
-          SIWES<span className="text-teal-500">Flow</span>
-        </span>
-      </div>
+  <Link href="/supervisor" className="text-white text-xl font-bold tracking-wide hover:opacity-80 transition-opacity">
+    SIWES<span className="text-teal-500">Flow</span>
+  </Link>
+</div>
       
       <nav className="flex-1 p-4 space-y-2">
         <Link 

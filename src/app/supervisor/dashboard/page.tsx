@@ -1,5 +1,6 @@
 "use client";
 
+import Link from 'next/link';
 import React, { useState } from 'react';
 import { Menu } from 'lucide-react';
 import Sidebar from '../../../components/supervisor/Sidebar';
@@ -35,18 +36,18 @@ export default function SupervisorDashboard() {
       <main className="flex-1 flex flex-col h-screen overflow-y-auto w-full">
         
         {/* Mobile-Only Header */}
-        <div className="md:hidden bg-white border-b border-slate-200 px-4 py-3 flex items-center justify-between sticky top-0 z-10 shadow-sm">
-          <span className="text-slate-900 text-xl font-bold tracking-wide">
-          SIWES<span className="text-teal-500">Flow</span>
-        </span>
-          <button 
-            onClick={() => setIsSidebarOpen(true)}
-            className="p-2 -mr-2 text-slate-600 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-colors"
-            aria-label="Toggle Menu"
-          >
-            <Menu size={24} />
-          </button>
-        </div>
+       <div className="md:hidden bg-white border-b border-slate-200 px-4 py-3 flex items-center justify-between sticky top-0 z-10 shadow-sm">
+  <Link href="/supervisor" className="text-slate-900 text-xl font-bold tracking-wide hover:opacity-80 transition-opacity">
+    SIWES<span className="text-teal-500">Flow</span>
+  </Link>
+  <button 
+    onClick={() => setIsSidebarOpen(true)}
+    className="p-2 -mr-2 text-slate-600 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-colors"
+    aria-label="Toggle Menu"
+  >
+    <Menu size={24} />
+  </button>
+</div>
 
         {/* Dashboard Content */}
         <div className="p-4 md:p-8 w-full max-w-7xl mx-auto">
