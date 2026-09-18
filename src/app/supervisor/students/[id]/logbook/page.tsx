@@ -1,15 +1,17 @@
-import React from 'react';
+"use client";
+
+import React, { use } from 'react';
 import Link from 'next/link';
 import { mockStudents, mockActivityLogs } from '../../../../../data/mock';
 import { Calendar, Clock, CheckCircle, XCircle, ArrowLeft, MessageSquare, Briefcase } from 'lucide-react';
 
-export default async function LogbookReviewPage({ 
+export default function LogbookReviewPage({ 
   params 
 }: { 
   params: Promise<{ id: string }> 
 }) {
-  // Await the params object (Next.js 15 standard)
-  const { id } = await params;
+  // Unwrap the params object using React.use() for Client Components
+  const { id } = use(params);
   
   // Fetch the specific student and their logs
   const student = mockStudents.find((s) => s.id === id);
@@ -108,10 +110,16 @@ export default async function LogbookReviewPage({
                         placeholder="Add notes before approving..."
                       ></textarea>
                       <div className="flex gap-2 mt-1">
-                        <button className="flex-1 bg-teal-600 hover:bg-teal-700 text-white font-medium py-2 rounded-lg text-sm transition-colors flex items-center justify-center gap-1 shadow-sm">
+                        <button 
+                          onClick={() => alert("Log Approved! Backend API integration pending.")}
+                          className="flex-1 bg-teal-600 hover:bg-teal-700 text-white font-medium py-2 rounded-lg text-sm transition-colors flex items-center justify-center gap-1 shadow-sm"
+                        >
                           <CheckCircle size={16} /> Approve
                         </button>
-                        <button className="flex-1 bg-white hover:bg-rose-50 text-rose-600 border border-slate-300 hover:border-rose-200 font-medium py-2 rounded-lg text-sm transition-colors flex items-center justify-center gap-1 shadow-sm">
+                        <button 
+                          onClick={() => alert("Rejection flow triggered! Backend API integration pending.")}
+                          className="flex-1 bg-white hover:bg-rose-50 text-rose-600 border border-slate-300 hover:border-rose-200 font-medium py-2 rounded-lg text-sm transition-colors flex items-center justify-center gap-1 shadow-sm"
+                        >
                           <XCircle size={16} /> Reject
                         </button>
                       </div>
