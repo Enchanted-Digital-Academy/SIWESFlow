@@ -1,4 +1,4 @@
-export type ActivityStatus = 'pending' | 'approved' | 'rejected' | 'revision_requested';
+﻿export type ActivityStatus = 'pending' | 'approved' | 'rejected' | 'revision_requested';
 
 export interface Student {
   id: string;
