@@ -1,6 +1,7 @@
 "use client";
 
 import Link from 'next/link';
+import Image from 'next/image';
 import React, { useState } from 'react';
 import { Menu } from 'lucide-react';
 import Sidebar from '../../../components/supervisor/Sidebar';
@@ -45,17 +46,24 @@ export default function StudentsPage() {
       </div>
 
       <main className="flex-1 flex flex-col h-screen overflow-y-auto w-full">
-       <div className="md:hidden bg-white border-b border-slate-200 px-4 py-3 flex items-center justify-between sticky top-0 z-10 shadow-sm">
-  <Link href="/supervisor" className="text-slate-900 text-xl font-bold tracking-wide hover:opacity-80 transition-opacity">
-    SIWES<span className="text-teal-500">Flow</span>
-  </Link>
-  <button 
-    onClick={() => setIsSidebarOpen(true)}
-    className="p-2 -mr-2 text-slate-600 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-colors"
-  >
-    <Menu size={24} />
-  </button>
-</div>
+        <div className="md:hidden bg-siwes-blue border-b border-blue-900 px-4 py-3 flex items-center justify-between sticky top-0 z-10 shadow-sm">
+          <Link href="/supervisor/dashboard" className="transition-opacity hover:opacity-80">
+            <Image 
+              src="/SIWESFlow_logo.png" 
+              alt="SIWESFlow Logo" 
+              width={140} 
+              height={40} 
+              className="object-contain brightness-0 invert" 
+              priority
+            />
+          </Link>
+          <button 
+            onClick={() => setIsSidebarOpen(true)}
+            className="p-2 -mr-2 text-white hover:bg-blue-800/50 rounded-lg transition-colors"
+          >
+            <Menu size={24} />
+          </button>
+        </div>
 
         <div className="p-4 md:p-8 w-full max-w-7xl mx-auto">
           <div className="mb-6">
