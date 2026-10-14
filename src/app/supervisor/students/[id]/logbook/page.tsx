@@ -10,10 +10,8 @@ export default function LogbookReviewPage({
 }: { 
   params: Promise<{ id: string }> 
 }) {
-  // Unwrap the params object using React.use() for Client Components
   const { id } = use(params);
   
-  // Fetch the specific student and their logs
   const student = mockStudents.find((s) => s.id === id);
   const logs = mockActivityLogs.filter((log) => log.studentId === id).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
@@ -21,7 +19,7 @@ export default function LogbookReviewPage({
     return (
       <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center text-slate-600">
         <h2 className="text-xl font-bold text-slate-900 mb-2">Student Not Found</h2>
-        <Link href="/supervisor/students" className="text-teal-600 hover:underline">Return to Roster</Link>
+        <Link href="/supervisor/students" className="text-siwes-blue hover:underline">Return to Roster</Link>
       </div>
     );
   }
@@ -43,7 +41,7 @@ export default function LogbookReviewPage({
               </p>
             </div>
             <div className="bg-slate-100 px-4 py-2 rounded-lg border border-slate-200 text-sm font-medium text-slate-700">
-              Total Hours: <span className="text-teal-700 font-bold ml-1">{logs.reduce((acc, log) => acc + log.hoursWorked, 0)} hrs</span>
+              Total Hours: <span className="text-siwes-blue font-bold ml-1">{logs.reduce((acc, log) => acc + log.hoursWorked, 0)} hrs</span>
             </div>
           </div>
         </div>
@@ -77,7 +75,7 @@ export default function LogbookReviewPage({
                   {log.skillsAcquired.length > 0 && (
                     <div className="flex flex-wrap gap-2 mt-4">
                       {log.skillsAcquired.map((skill, index) => (
-                        <span key={index} className="text-xs font-medium bg-teal-50 text-teal-700 px-2 py-1 rounded-md border border-teal-100">
+                        <span key={index} className="text-xs font-medium bg-blue-50 text-siwes-blue px-2 py-1 rounded-md border border-blue-100">
                           {skill}
                         </span>
                       ))}
@@ -89,10 +87,10 @@ export default function LogbookReviewPage({
                 <div className="p-6 md:w-72 bg-slate-50 flex flex-col justify-center">
                   {log.status === 'approved' ? (
                     <div className="text-center">
-                      <div className="inline-flex items-center justify-center w-12 h-12 bg-teal-100 rounded-full text-teal-600 mb-3">
+                      <div className="inline-flex items-center justify-center w-12 h-12 bg-emerald-100 rounded-full text-emerald-600 mb-3">
                         <CheckCircle size={24} />
                       </div>
-                      <p className="font-semibold text-teal-800">Log Approved</p>
+                      <p className="font-semibold text-emerald-800">Log Approved</p>
                       {log.supervisorFeedback && (
                         <p className="text-xs text-slate-600 mt-2 italic bg-white p-2 rounded border border-slate-200">
                           &quot;{log.supervisorFeedback}&quot;
@@ -105,14 +103,14 @@ export default function LogbookReviewPage({
                         <MessageSquare size={12} /> Supervisor Feedback
                       </label>
                       <textarea 
-                        className="w-full text-sm border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-teal-500 focus:outline-none resize-none bg-white" 
+                        className="w-full text-sm border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-siwes-blue focus:outline-none resize-none bg-white text-slate-900" 
                         rows={3} 
                         placeholder="Add notes before approving..."
                       ></textarea>
                       <div className="flex gap-2 mt-1">
                         <button 
                           onClick={() => alert("Log Approved! Backend API integration pending.")}
-                          className="flex-1 bg-teal-600 hover:bg-teal-700 text-white font-medium py-2 rounded-lg text-sm transition-colors flex items-center justify-center gap-1 shadow-sm"
+                          className="flex-1 bg-siwes-blue hover:bg-blue-800 text-white font-medium py-2 rounded-lg text-sm transition-colors flex items-center justify-center gap-1 shadow-sm"
                         >
                           <CheckCircle size={16} /> Approve
                         </button>

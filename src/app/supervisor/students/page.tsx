@@ -11,7 +11,7 @@ import { mockStudents, mockActivityLogs } from '../../../data/mock';
 export default function StudentsPage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  // Transform your existing mock data to fit the table's expected interface
+  // Transform mock data to fit the table's expected interface
   const tableData: AssignedStudent[] = mockStudents.map((student) => {
     // Get all logs for this specific student
     const studentLogs = mockActivityLogs.filter((log) => log.studentId === student.id);
@@ -19,15 +19,24 @@ export default function StudentsPage() {
     // Find the most recent log date
     const latestLog = studentLogs.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())[0];
     
-    // Determine status based on whether they have pending logs
+    // Calculate metrics for status determination
     const hasPendingLogs = studentLogs.some((log) => log.status === 'pending');
+    const hasApprovedHours = studentLogs.some((log) => log.status === 'approved' && log.hoursWorked > 0);
+
+    // CORRECTED PRIORITY: Pending Review > At Risk > Active
+    let currentStatus = 'Active';
+    if (hasPendingLogs) {
+      currentStatus = 'Pending Review'; // Top priority: requires supervisor action
+    } else if (!hasApprovedHours) {
+      currentStatus = 'At Risk'; // Secondary: no pending logs AND no approved hours
+    }
 
     return {
       id: student.id,
       name: student.name,
       department: student.department,
       level: student.level,
-      status: hasPendingLogs ? 'Pending Review' : 'Active',
+      status: currentStatus,
       lastLogDate: latestLog ? latestLog.date : 'No logs yet',
     };
   });
@@ -71,7 +80,7 @@ export default function StudentsPage() {
             <p className="text-slate-600 text-sm mt-1">Manage and review your assigned cohort.</p>
           </div>
           
-          {/* Pass the dynamically generated data here */}
+          {/* Renders your existing table component with the enriched data */}
           <AssignedStudentTable students={tableData} />
         </div>
       </main>
