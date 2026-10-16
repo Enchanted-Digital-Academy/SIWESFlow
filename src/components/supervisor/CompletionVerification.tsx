@@ -82,7 +82,7 @@ export default function CompletionVerification({
               required
               value={finalGrade}
               onChange={(e) => setFinalGrade(e.target.value)}
-              className="w-full md:w-1/2 p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-siwes-blue focus:border-siwes-blue outline-none bg-white transition-all"
+              className="w-full md:w-1/2 p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-siwes-blue focus:border-siwes-blue outline-none bg-white transition-all text-slate-700"
             >
               <option value="" disabled>Select a grade...</option>
               <option value="A">A (Excellent - 70% and above)</option>
@@ -95,7 +95,7 @@ export default function CompletionVerification({
 
           <div>
             <label className="block text-sm font-bold text-slate-700 mb-2 flex items-center gap-2">
-              <FileText size={16} className="text-slate-400" />
+              <FileText size={16} className="text-slate-700" />
               Supervisor&apos;s General Assessment
             </label>
             <textarea 
@@ -104,7 +104,7 @@ export default function CompletionVerification({
               value={comments}
               onChange={(e) => setComments(e.target.value)}
               placeholder="Provide a detailed evaluation of the student's technical skills, punctuality, and professional growth during the internship..."
-              className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-siwes-blue focus:border-siwes-blue outline-none bg-white transition-all resize-none"
+              className="w-full p-3 border border-slate-300 text-slate-700 rounded-lg focus:ring-2 focus:ring-siwes-blue focus:border-siwes-blue outline-none bg-white transition-all resize-none"
             />
           </div>
         </div>
