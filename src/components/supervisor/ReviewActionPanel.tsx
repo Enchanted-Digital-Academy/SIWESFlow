@@ -3,12 +3,19 @@
 import React, { useState } from 'react';
 import { CheckCircle, XCircle, AlertCircle, MessageSquare, Star } from 'lucide-react';
 
+// 1. Strict interface mapping exactly to what the component sends
+export interface ReviewActionPayload {
+  activityId: string;
+  action: 'approve' | 'reject' | 'request_correction';
+  feedback: string;
+  rating?: number;
+}
+
 interface ReviewActionPanelProps {
   activityId: string;
   studentName: string;
   currentStatus: 'pending' | 'approved' | 'rejected' | 'correction_requested';
-  // Note: API client will replace this mock submission handler in Sprint 2
-  onSubmitReview: (payload: any) => void; 
+  onSubmitReview: (payload: ReviewActionPayload) => void; 
 }
 
 export default function ReviewActionPanel({ 
@@ -22,21 +29,20 @@ export default function ReviewActionPanel({
   const [hoveredRating, setHoveredRating] = useState<number>(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleAction = (actionType: 'approve' | 'reject' | 'correction') => {
-    if ((actionType === 'reject' || actionType === 'correction') && !feedback.trim()) {
+  const handleAction = (actionType: 'approve' | 'reject' | 'request_correction') => {
+    if ((actionType === 'reject' || actionType === 'request_correction') && !feedback.trim()) {
       alert('Feedback is required for rejections or correction requests.');
       return;
     }
 
     setIsSubmitting(true);
     
-    // Simulating API payload structure for Sprint 2 backend contract
-    const payload = {
+    // 2. Build the payload to perfectly match the interface
+    const payload: ReviewActionPayload = {
       activityId,
       action: actionType,
       feedback,
-      rating: actionType === 'approve' ? rating : null,
-      reviewedAt: new Date().toISOString(),
+      ...(actionType === 'approve' && rating > 0 ? { rating } : {})
     };
 
     setTimeout(() => {
@@ -49,7 +55,7 @@ export default function ReviewActionPanel({
     return (
       <div className="bg-slate-50 border border-slate-200 rounded-xl p-6 text-center">
         <p className="text-slate-600 font-medium">
-          This activity has already been reviewed (Status: <span className="uppercase">{currentStatus}</span>).
+          This activity has already been reviewed (Status: <span className="uppercase">{currentStatus.replace('_', ' ')}</span>).
         </p>
       </div>
     );
@@ -63,7 +69,7 @@ export default function ReviewActionPanel({
       </div>
 
       <div className="p-6 space-y-6">
-        {/* Rating Section (Only relevant if they are doing well/approving) */}
+        {/* Rating Section */}
         <div>
           <label className="block text-sm font-bold text-slate-700 mb-2">Performance Rating</label>
           <div className="flex items-center gap-1">
@@ -92,7 +98,7 @@ export default function ReviewActionPanel({
           </div>
         </div>
 
-        {/* Feedback / Comment Box */}
+        {/* Feedback Box */}
         <div>
           <label className="block text-sm font-bold text-slate-700 mb-2">
             Constructive Feedback <span className="text-slate-400 font-normal">(Required for revisions)</span>
@@ -117,7 +123,7 @@ export default function ReviewActionPanel({
           </button>
           
           <button
-            onClick={() => handleAction('correction')}
+            onClick={() => handleAction('request_correction')}
             disabled={isSubmitting}
             className="flex-1 flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 text-white font-bold py-2.5 px-4 rounded-lg transition-colors disabled:opacity-50"
           >
