@@ -6,6 +6,14 @@ import { useParams, useRouter } from 'next/navigation';
 import { ArrowLeft, Calendar, Clock, FileText, Paperclip } from 'lucide-react';
 import ReviewActionPanel from '../../../../../../components/supervisor/ReviewActionPanel';
 
+type UIActivityStatus = 'pending' | 'approved' | 'rejected' | 'correction_requested';
+
+interface ReviewActionPayload {
+  action: 'approve' | 'reject' | 'request_correction';
+  comment?: string;
+  rating?: number;
+}
+
 // Temporary mock data for Sprint 1 UI binding
 const mockEntry = {
   id: 'act_101',
@@ -15,23 +23,25 @@ const mockEntry = {
   department: 'Software Engineering',
   description: 'Implemented the user authentication flow using NextAuth.js. Configured the PostgreSQL database schema for the user profiles and tested the login/logout endpoints.',
   learned: 'Gained a deeper understanding of JWT session management and backend route protection.',
-  status: 'pending' as const,
+  status: 'pending' as UIActivityStatus,
   attachedEvidence: 'auth_flow_diagram.pdf'
 };
 
 export default function ActivityReviewPage() {
   const params = useParams();
-  const router = useRouter();
+  const router = useRouter(); 
   
-  // CORRECT PLACEMENT: Top level of the component
-  const [activityStatus, setActivityStatus] = useState<'pending' | 'approved' | 'rejected' | 'correction_requested'>(mockEntry.status);
+  const [activityStatus, setActivityStatus] = useState<UIActivityStatus>(mockEntry.status);
 
-  const handleReviewSubmission = (payload: any) => {
+  const handleReviewSubmission = (payload: ReviewActionPayload) => {
     console.log('Sprint 1 Mock - Payload ready for Backend:', payload);
     
     // Update local UI state to show the panel's success state
-    setActivityStatus(payload.action === 'approve' ? 'approved' : 
-                      payload.action === 'reject' ? 'rejected' : 'correction_requested');
+    setActivityStatus(
+      payload.action === 'approve' ? 'approved' : 
+      payload.action === 'reject' ? 'rejected' : 
+      'correction_requested'
+    );
     
     alert(`Review submitted successfully! Action: ${payload.action}`);
   };
@@ -106,7 +116,7 @@ export default function ActivityReviewPage() {
         <ReviewActionPanel 
           activityId={mockEntry.id}
           studentName={mockEntry.studentName}
-          currentStatus={activityStatus as any}
+          currentStatus={activityStatus} 
           onSubmitReview={handleReviewSubmission}
         />
       </main>
